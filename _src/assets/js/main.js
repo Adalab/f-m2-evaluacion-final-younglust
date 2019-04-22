@@ -19,48 +19,6 @@ const btn = document.querySelector(".main__button");
 const listSeries = document.querySelector(".main__list");
 const imgDefault = "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
 
-// function callButton() {
-//   const inputValue = input.value;
-
-//   fetch(`http://api.tvmaze.com/search/shows?q=${inputValue}`)
-//     .then(function(response) {
-//       return response.json();
-//     })
-//     .then(function(data) {
-//       const dataArray = data;
-
-//       let newLi = "";
-//       for (let i = 0; i < dataArray.length; i++) {
-//         //create items
-//         newLi = document.createElement("li");
-//         const newTitle = document.createElement("h3");
-//         const newImage = document.createElement("img");
-
-//         newLi.classList.add("main_li");
-//         newTitle.classList.add("main__title");
-//         newImage.classList.add("main__img");
-
-//         listSeries.appendChild(newLi);
-//         newLi.append(newTitle, newImage);
-//         newImage.src = imgDefault;
-//         //creater items
-
-//         const objSerie = dataArray[i].show;
-//         const nameSerie = objSerie.name;
-//         let objImg = objSerie.image;
-
-//         if(objImg === null || objImg === undefined) {
-//             newImage.src = imgDefault;
-//             console.log(objImg);
-//         } else {
-//             newImage.src = objSerie.image.medium
-//         }
-//         newTitle.innerText = nameSerie;
-//       }
-//     });
-// }
-// btn.addEventListener("click", callButton);
-
 function callButton() {
   const inputValue = input.value;
 
@@ -70,14 +28,14 @@ function callButton() {
     })
     .then(function(data) {
       const dataArray = data;
+      let cleanList = "";
 
-      let newLi = "";
       for (let i = 0; i < dataArray.length; i++) {
         const objSerie = dataArray[i].show;
         const nameSerie = objSerie.name;
         let objImg = objSerie.image;
         //create items
-        newLi = document.createElement("li");
+        let newLi = document.createElement("li");
         const newTitle = document.createElement("h3");
         const newImage = document.createElement("img");
 
@@ -88,7 +46,7 @@ function callButton() {
 
         //appendchilds
         listSeries.appendChild(newLi);
-        newLi.append(newTitle, newImage);
+        newLi.append(newImage, newTitle);
         newImage.src = imgDefault;
 
         if (objImg === null || objImg === undefined) {
