@@ -26,26 +26,34 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-}
-.main__label {
-  display: none;
-}
-.main__list {
-  width: 80%;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-.main_li {
+
+  &__label {
+    display: none;
+  }
+
+  &__list {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &__li {
     display: inline-block;
     text-align: center;
-    width: 230px;;
-    border:solid $color-pale-white 1px;
+    width: 230px;
+    border: solid $color-pale-white 1px;
     background: $color-pale-white;
     margin-bottom: 10px;
     overflow: hidden;
     padding: 10px;
-}
-.main__img {
+  }
+  
+  &__img {
     margin: 0 auto;
+  }
+}
+.selected--series {
+  background: $color-fruit-grape;
+  color: $color-white;
 }

@@ -13,11 +13,38 @@ console.log(">> Ready :)");
 //hacer el fetch
 //llamar al nombre de la película
 //llamar al cartel de la película
+//si li seleccionado
+//guardar en el array
+//crear el listado de favoritos con el array
 
 const input = document.querySelector(".main__input");
 const btn = document.querySelector(".main__button");
 const listSeries = document.querySelector(".main__list");
 const imgDefault = "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
+const newArraySeries = [];
+
+// function saveArray() {
+//   let totalDays = 0;
+//   let totalArray = [];
+
+//   for (let i = 0; i < 8; i++) {
+//     totalDays += 1;
+//     totalArray[i] = totalDays;
+//   }
+//   console.log(totalArray);
+// }
+// saveArray();
+
+//Select favorites
+function selectItem(e) {
+  const currentItem = e.currentTarget;
+  currentItem.classList.toggle("selected--series");
+
+  //add select item to array
+  if (currentItem.classList.contains("selected--series")) {
+    console.log(currentItem);
+  }
+}
 
 function callButton() {
   const inputValue = input.value;
@@ -34,14 +61,15 @@ function callButton() {
         const objSerie = dataArray[i].show;
         const nameSerie = objSerie.name;
         let objImg = objSerie.image;
+
         //create items
         let newLi = document.createElement("li");
         const newTitle = document.createElement("h3");
         const newImage = document.createElement("img");
 
         //add classes to new items
-        newLi.classList.add("main_li");
-        newTitle.classList.add("main__title");
+        newLi.classList.add("main__li");
+        newTitle.classList.add("main__second-title");
         newImage.classList.add("main__img");
 
         //appendchilds
@@ -51,12 +79,36 @@ function callButton() {
 
         if (objImg === null || objImg === undefined) {
           newImage.src = imgDefault;
-          console.log(objImg);
         } else {
           newImage.src = objSerie.image.medium;
         }
         newTitle.innerText = nameSerie;
+
+        //Select favorites
+        newLi.addEventListener("click", selectItem);
       }
     });
 }
 btn.addEventListener("click", callButton);
+
+
+
+// function saveArray() {
+//   let totalDays = 0;
+//   let totalArray = [];
+
+//   for (let i = 0; i < 8; i++) {
+//     totalDays += 1;
+//     totalArray[i] = totalDays;
+//   }
+//   console.log(totalArray);
+// }
+// saveArray();
+
+// let initialDate = 2017;
+// let lunas = [];
+// for (let i = 0; i < 8; i++) {
+//     initialDate += 3;
+//     lunas[i] = initialDate;
+// }
+// console.log(`Las próximas lunas serán en: ${lunas}.`);
