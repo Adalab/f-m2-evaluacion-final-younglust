@@ -21,28 +21,26 @@ const input = document.querySelector(".main__input");
 const btn = document.querySelector(".main__button");
 const listSeries = document.querySelector(".main__list");
 const imgDefault = "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
-const newArraySeries = [];
+let newArraySeries = [];
 
-// function saveArray() {
-//   let totalDays = 0;
-//   let totalArray = [];
-
-//   for (let i = 0; i < 8; i++) {
-//     totalDays += 1;
-//     totalArray[i] = totalDays;
-//   }
-//   console.log(totalArray);
-// }
-// saveArray();
+const favorite = document.querySelector(".main-search");
+console.log(favorite);
 
 //Select favorites
 function selectItem(e) {
   const currentItem = e.currentTarget;
   currentItem.classList.toggle("selected--series");
+  let tryme = document.querySelector(".main__li");
+  //console.dir(tryme);
 
   //add select item to array
   if (currentItem.classList.contains("selected--series")) {
-    console.log(currentItem);
+    const contentText = currentItem.innerText;
+    const contentImg = currentItem.firstChild;
+    newArraySeries.push(contentText, contentImg);
+    console.log("newArraySeries", newArraySeries);
+    //console.log(currentItem.innerHTML);
+    //const findListParent = document.querySelector(".main__list");
   }
 }
 
@@ -75,7 +73,8 @@ function callButton() {
         //appendchilds
         listSeries.appendChild(newLi);
         newLi.append(newImage, newTitle);
-        newImage.src = imgDefault;
+        newImage.src = imgDefault;        
+
 
         if (objImg === null || objImg === undefined) {
           newImage.src = imgDefault;
@@ -90,25 +89,3 @@ function callButton() {
     });
 }
 btn.addEventListener("click", callButton);
-
-
-
-// function saveArray() {
-//   let totalDays = 0;
-//   let totalArray = [];
-
-//   for (let i = 0; i < 8; i++) {
-//     totalDays += 1;
-//     totalArray[i] = totalDays;
-//   }
-//   console.log(totalArray);
-// }
-// saveArray();
-
-// let initialDate = 2017;
-// let lunas = [];
-// for (let i = 0; i < 8; i++) {
-//     initialDate += 3;
-//     lunas[i] = initialDate;
-// }
-// console.log(`Las próximas lunas serán en: ${lunas}.`);
