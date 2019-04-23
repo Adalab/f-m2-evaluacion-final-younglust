@@ -1,28 +1,10 @@
 "use strict";
 
-//1. Una vez creado el html con input, button y listado
-//2. recoger los valores del input
-//3. añadir listener al botón y ver que se escucha
-//4. crear elementos
-//crear li de las pelis
-//crear h3 para el título
-//crear img para el cartel
-//mirar la documentacion de la api
-//hacer el fetch
-//llamar al nombre de la película
-//llamar al cartel de la película
-//si li seleccionado
-//guardar en el array
-//crear el listado de favoritos con el array
-
 const input = document.querySelector(".main__input");
 const btn = document.querySelector(".main__button");
 let listSeries = document.querySelector(".main__list");
 const imgDefault = "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
-
 let newArraySeries = [];
-
-//let setNewAarray = [...new Set(newArraySeries)];
 const favorite = document.querySelector(".list-favorits");
 
 //Select favorites
@@ -32,12 +14,9 @@ function selectItem(e) {
   const contentText = currentItem.innerText;
   const contentImg = currentItem.firstElementChild;
   const contentId = currentItem.id;
-  const selectItem = document.getElementById("selectFace");
 
-  //clonar el current target
+  //clonar el current target to add for the list
   const cloneImg = contentImg.cloneNode();
-  //let ttt = document.querySelector(".main__li");
-  //console.dir(ttt);
 
   //add select item to array
   newArraySeries.push({
@@ -62,14 +41,28 @@ function selectItem(e) {
       let listFavorite = document.createElement("li");
       listFavorite.classList.add("myFav");
       favorite.append(listFavorite);
+      listFavorite.setAttribute("id", newArraySeries[i].showId);
       listFavorite.append(newArraySeries[i].showImg, newArraySeries[i].name);
 
       //localStorage
       localStorage.setItem("myShow", JSON.stringify(newArraySeries));
       const saveShow = JSON.parse(localStorage.getItem("myShow"));
-    //    if (saveShow) {
-    //      newArraySeries = saveShow;
-    //    }
+
+      //Delete each fav
+      listFavorite.addEventListener("click", deleteFav);
+    }
+  }
+}
+
+//Delete each fav
+function deleteFav(e) {
+  const currentFav = e.currentTarget;
+  let mainList = document.querySelectorAll(".main__li");
+
+  for (let i = 0; i < mainList.length; i++) {
+    if (currentFav.id === mainList[i].id) {      
+      mainList[i].classList.remove("selected--series");
+      currentFav.remove();
     }
   }
 }
