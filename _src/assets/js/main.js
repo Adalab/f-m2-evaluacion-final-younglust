@@ -1,7 +1,5 @@
 "use strict";
 
-console.log(">> Ready :)");
-
 //1. Una vez creado el html con input, button y listado
 //2. recoger los valores del input
 //3. añadir listener al botón y ver que se escucha
@@ -19,28 +17,42 @@ console.log(">> Ready :)");
 
 const input = document.querySelector(".main__input");
 const btn = document.querySelector(".main__button");
-const listSeries = document.querySelector(".main__list");
+let listSeries = document.querySelector(".main__list");
 const imgDefault = "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
 let newArraySeries = [];
-
-const favorite = document.querySelector(".main-search");
-console.log(favorite);
+const favorite = document.querySelector(".list-favorits");
 
 //Select favorites
 function selectItem(e) {
   const currentItem = e.currentTarget;
-  currentItem.classList.toggle("selected--series");
-  let tryme = document.querySelector(".main__li");
-  //console.dir(tryme);
+  currentItem.classList.add("selected--series");
+  const contentText = currentItem.innerText;
+  const contentImg = currentItem.firstElementChild;
+
+  //clonar el current target
+  const cloneImg = contentImg.cloneNode();
+  //let list = document.querySelector(".selected--series");
+//   let ttt = document.querySelector(".main__li");
+//   console.dir(ttt);
 
   //add select item to array
+  newArraySeries.push({
+    name: contentText,
+    filmImg: cloneImg
+  });
+
+  console.log(newArraySeries);
   if (currentItem.classList.contains("selected--series")) {
-    const contentText = currentItem.innerText;
-    const contentImg = currentItem.firstChild;
-    newArraySeries.push(contentText, contentImg);
-    console.log("newArraySeries", newArraySeries);
-    //console.log(currentItem.innerHTML);
-    //const findListParent = document.querySelector(".main__list");
+    //clean list
+    favorite.innerHTML = "";
+
+    //loop array favorite
+    for (let i = 0; i < newArraySeries.length; i++) {
+      const listFavorite = document.createElement("li");
+      favorite.append(listFavorite);
+      //listFavorite.append(newArraySeries[i].filmImg, newArraySeries[i].name);
+      listFavorite.append(newArraySeries[i].filmImg, newArraySeries[i].name);
+    }
   }
 }
 
@@ -53,7 +65,8 @@ function callButton() {
     })
     .then(function(data) {
       const dataArray = data;
-      let cleanList = "";
+      //cleanList
+      listSeries.innerHTML = "";
 
       for (let i = 0; i < dataArray.length; i++) {
         const objSerie = dataArray[i].show;
@@ -73,9 +86,9 @@ function callButton() {
         //appendchilds
         listSeries.appendChild(newLi);
         newLi.append(newImage, newTitle);
-        newImage.src = imgDefault;        
+        newImage.src = imgDefault;
 
-
+        //img: original or default
         if (objImg === null || objImg === undefined) {
           newImage.src = imgDefault;
         } else {
