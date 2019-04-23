@@ -19,7 +19,10 @@ const input = document.querySelector(".main__input");
 const btn = document.querySelector(".main__button");
 let listSeries = document.querySelector(".main__list");
 const imgDefault = "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
+
 let newArraySeries = [];
+
+//let setNewAarray = [...new Set(newArraySeries)];
 const favorite = document.querySelector(".list-favorits");
 
 //Select favorites
@@ -28,30 +31,45 @@ function selectItem(e) {
   currentItem.classList.add("selected--series");
   const contentText = currentItem.innerText;
   const contentImg = currentItem.firstElementChild;
+  const contentId = currentItem.id;
+  const selectItem = document.getElementById("selectFace");
 
   //clonar el current target
   const cloneImg = contentImg.cloneNode();
-  //let list = document.querySelector(".selected--series");
-//   let ttt = document.querySelector(".main__li");
-//   console.dir(ttt);
+  //let ttt = document.querySelector(".main__li");
+  //console.dir(ttt);
 
   //add select item to array
   newArraySeries.push({
     name: contentText,
-    filmImg: cloneImg
+    showImg: cloneImg,
+    showId: contentId
   });
 
-  console.log(newArraySeries);
   if (currentItem.classList.contains("selected--series")) {
     //clean list
     favorite.innerHTML = "";
 
+    //add title favorites
+    const titleFavorite = document.createElement("h3");
+    const titleFavText = document.createTextNode("Mis series favoritas");
+    titleFavorite.classList.add("main__favorites");
+    titleFavorite.appendChild(titleFavText);
+    favorite.appendChild(titleFavorite);
+
     //loop array favorite
     for (let i = 0; i < newArraySeries.length; i++) {
-      const listFavorite = document.createElement("li");
+      let listFavorite = document.createElement("li");
+      listFavorite.classList.add("myFav");
       favorite.append(listFavorite);
-      //listFavorite.append(newArraySeries[i].filmImg, newArraySeries[i].name);
-      listFavorite.append(newArraySeries[i].filmImg, newArraySeries[i].name);
+      listFavorite.append(newArraySeries[i].showImg, newArraySeries[i].name);
+
+      //localStorage
+      localStorage.setItem("myShow", JSON.stringify(newArraySeries));
+      const saveShow = JSON.parse(localStorage.getItem("myShow"));
+    //    if (saveShow) {
+    //      newArraySeries = saveShow;
+    //    }
     }
   }
 }
@@ -65,6 +83,7 @@ function callButton() {
     })
     .then(function(data) {
       const dataArray = data;
+      let countId = 0;
       //cleanList
       listSeries.innerHTML = "";
 
@@ -75,8 +94,12 @@ function callButton() {
 
         //create items
         let newLi = document.createElement("li");
-        const newTitle = document.createElement("h3");
+        const newTitle = document.createElement("h2");
         const newImage = document.createElement("img");
+
+        //add id to the li's
+        countId++;
+        newLi.setAttribute("id", `show${countId}`);
 
         //add classes to new items
         newLi.classList.add("main__li");
