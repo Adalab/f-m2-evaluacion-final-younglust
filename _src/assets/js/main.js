@@ -5,6 +5,7 @@ const btn = document.querySelector(".main__button");
 let listSeries = document.querySelector(".main__list");
 const imgDefault = "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
 let newArraySeries = [];
+let newLanguageArr = ["English", "Spanish", "Portuguese"];
 const favorite = document.querySelector(".list-favorits");
 
 //Select favorites
@@ -50,9 +51,19 @@ function selectItem(e) {
 
       //Delete each fav
       listFavorite.addEventListener("click", deleteFav);
+
+      console.log("newArraySeries: ", newArraySeries[i].name);
     }
   }
 }
+
+const butLog = document.querySelector('.butLog');
+function countFavs() {
+    const totalFav = document.querySelectorAll(".myFav");
+    
+}
+butLog.addEventListener('click', countFavs);
+
 
 //Delete each fav
 function deleteFav(e) {
@@ -60,7 +71,7 @@ function deleteFav(e) {
   let mainList = document.querySelectorAll(".main__li");
 
   for (let i = 0; i < mainList.length; i++) {
-    if (currentFav.id === mainList[i].id) {      
+    if (currentFav.id === mainList[i].id) {
       mainList[i].classList.remove("selected--series");
       currentFav.remove();
     }
@@ -83,12 +94,14 @@ function callButton() {
       for (let i = 0; i < dataArray.length; i++) {
         const objSerie = dataArray[i].show;
         const nameSerie = objSerie.name;
+        const language = dataArray[i].show.language;
         let objImg = objSerie.image;
 
         //create items
         let newLi = document.createElement("li");
         const newTitle = document.createElement("h2");
         const newImage = document.createElement("img");
+        const newElLanguage = document.createElement("h3");
 
         //add id to the li's
         countId++;
@@ -98,10 +111,11 @@ function callButton() {
         newLi.classList.add("main__li");
         newTitle.classList.add("main__second-title");
         newImage.classList.add("main__img");
+        newElLanguage.classList.add("main__lang");
 
         //appendchilds
         listSeries.appendChild(newLi);
-        newLi.append(newImage, newTitle);
+        newLi.append(newImage, newTitle, newElLanguage);
         newImage.src = imgDefault;
 
         //img: original or default
@@ -111,9 +125,19 @@ function callButton() {
           newImage.src = objSerie.image.medium;
         }
         newTitle.innerText = nameSerie;
+        newElLanguage.innerText = language;
 
         //Select favorites
         newLi.addEventListener("click", selectItem);
+
+        //loop language
+        for (let j = 0; j < newLanguageArr.length; j++) {
+          console.log(newLanguageArr[j]);
+
+          if (newLanguageArr[j] === language) {
+            newElLanguage.innerText = language + " Recomendado";
+          }
+        }
       }
     });
 }
